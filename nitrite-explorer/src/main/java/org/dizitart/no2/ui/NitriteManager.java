@@ -56,7 +56,12 @@ public class NitriteManager extends Application {
     private DbDetails dbDetails;
     private TextField dbFile;
 
+    private static String filePath = null;
+
     public static void main(String[] args) {
+        if (args.length > 0) {
+            filePath = args[0];
+        }
         launch(args);
     }
 
@@ -66,7 +71,14 @@ public class NitriteManager extends Application {
         this.primaryStage = primaryStage;
         this.primaryStage.setTitle("Nitrite Explorer");
         this.primaryStage.getIcons().addAll(getIcon("app.png").getImage());
-        showDbChooserDialog();
+        if (filePath != null) {
+            DbDetails dbDetails = new DbDetails();
+            dbDetails.setFileName(filePath);
+            showNitriteManager(dbDetails);
+        } else {
+            showDbChooserDialog();
+        }
+
         showNitriteOverview();
     }
 
